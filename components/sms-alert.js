@@ -55,16 +55,36 @@ export function SMSAlert(props){
 
     function getUsers(){
         var users = [];
-
+	var eventOUPath = getOrgUnitPathUID(event.orgUnit);
+	
         if (props.userGroupMap.length==0){
             //    alert("No Responders Set.[User Groups Empty]. Please Contact Admin");
             //  return
         }
-        
+	
         var defaultUserGroup = props.userGroupMap[constants.user_group_default_level_code];
 
+	var toBeFiltredByOUUserGroup = props.userGroupMap[constants.responders_filter_by_ou_code];
+	debugger
+
+	if (toBeFiltredByOUUserGroup){
+	    toBeFiltredByOUUserGroup.users.reduce(function(users,obj,index){
+                users.push(obj);
+                return users;
+            },users);
+	    
+	    users = users.filter(function(user){        
+		return user.organisationUnits.reduce(function(result,ou){
+		    if (eventOUPath.includes(ou.id)){
+			result = true;
+		    }
+		    return result
+		},false)    
+	    });	
+	}
+	
         if (!identifiedLevel){
-          //  alert("Level Not Recognized");
+            //  alert("Level Not Recognized");
             return
         }
     
@@ -369,6 +389,17 @@ ${comment?comment:""}`);
         return path;
     }
 
+    function getOrgUnitPathUID(uid){
+        var ou = treeOUService.getOrgUnitFromUID(uid);
+        var path = ou.id;
+        while(ou.parent){
+            path=ou.parent.id+" / "+path;
+            ou=ou.parent;
+        }
+        
+        return path;
+    }
+    
     function getPhone(){
         
         if (legacyMap[event.event]){

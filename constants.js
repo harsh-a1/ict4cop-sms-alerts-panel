@@ -11,6 +11,7 @@ exports.de_sent_json="zdc9Xu2tyuO";
 
 
 exports.user_group_default_level_code = "defaultLevel";
+exports.responders_filter_by_ou_code = "responders_to_be_filtered_by_ou";
 
 exports.africas_talking_params = {
     url : "https://www.ifipjwc2020.org/ict4cop_kenya_send_sms/",

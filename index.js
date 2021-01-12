@@ -37,7 +37,7 @@ window.onload = function(){
     var Pprogram = apiWrapper.getObj(`programs/${constants.program_sms_inbox}?fields=id,name,programStages[id,name,programStageDataElements[id,name,dataElement[id,name,valueType]]]`);
 
     var Puser = apiWrapper.getObj(`me`);
-    var PuserGroups = apiWrapper.getObj(`userGroups?fields=id,name,code,users[id,name,phoneNumber]&paging=false`);
+    var PuserGroups = apiWrapper.getObj(`userGroups?fields=id,name,code,users[id,name,phoneNumber,organisationUnits[id]]&paging=false`);
     var PoptionsIdentifiedLevels = apiWrapper.getObj(`optionSets/Tl4QLYO23Ur?fields=id,name,options[id,name,code]`)
     //var PouGroups = ouService.getOUGroups("id,name");
 
